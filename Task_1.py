@@ -5,8 +5,6 @@ def printMatrix(X):
         print(element)
 
 def svd(A):
-    U = np.zeros(shape=[A.shape[0], A.shape[0]])
-    V = np.zeros(shape=[A.shape[1], A.shape[1]])
     E = np.zeros(shape=A.shape) # sigma matrix
 
     # find AAt and AtA
@@ -65,4 +63,4 @@ def svd(A):
     print("UEVt matrix: ")
     printMatrix(A_test)
 
-    return U, V, E
+    return U, E, V
