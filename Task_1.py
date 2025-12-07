@@ -17,12 +17,12 @@ def svd(A):
     printMatrix(right_matrix)
 
     # find eigenvalues and vectors
-    eigenvalues_v, eigenvectors_v = np.linalg.eig(right_matrix)
+    eigenvalues_v, eigenvectors_v = np.linalg.eigh(right_matrix)
     indexes = np.argsort(eigenvalues_v)[::-1]
     eigenvalues_v = eigenvalues_v[indexes]
     eigenvectors_v = eigenvectors_v[:, indexes]
 
-    eigenvalues_u, eigenvectors_u = np.linalg.eig(left_matrix)
+    eigenvalues_u, eigenvectors_u = np.linalg.eigh(left_matrix)
     indexes = np.argsort(eigenvalues_u)[::-1]
     eigenvalues_u = eigenvalues_u[indexes]
     eigenvectors_u = eigenvectors_u[:, indexes]
@@ -38,11 +38,18 @@ def svd(A):
     printMatrix(E)
 
     V = eigenvectors_v
-    U = eigenvectors_u
+    for i in range(V.shape[0]):
+        norm = np.linalg.norm(V[:, i])
+        V[:, i] /= norm
 
+    U = eigenvectors_u
     for i in range(len(singular_nums)):
         if singular_nums[i] != 0:
             U[:, i] = np.dot(A, V[:, i]) / singular_nums[i]
+
+    for i in range(U.shape[0]):
+        norm = np.linalg.norm(U[:, i])
+        U[:, i] /= norm
 
     print("Matrix U:")
     printMatrix(U)
